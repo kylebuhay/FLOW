@@ -1,8 +1,7 @@
-///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
-
-///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
-
 import 'package:flutter/material.dart';
+import 'TimerPage.dart';
+import 'main.dart';
+import 'AboutFlowPage.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -45,9 +44,8 @@ class SettingsPage extends StatelessWidget {
             label: 'Settings',
           ),
         ],
-
         backgroundColor: Color(0xff1e1e1e),
-        currentIndex: 0,
+        currentIndex: 2,
         elevation: 8,
         iconSize: 21,
         selectedItemColor: Color(0xff47465d),
@@ -56,7 +54,21 @@ class SettingsPage extends StatelessWidget {
         unselectedFontSize: 11,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        onTap: (value) {},
+        onTap: (index) {
+          // Handle bottom navigation tap
+          if (index == 1) {
+            // Index 2 corresponds to the Settings icon
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          }else if(index == 0){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TimerPage()),
+            );
+          }
+        },
       ),
       body: Stack(
         alignment: Alignment.topLeft,
@@ -156,7 +168,12 @@ class SettingsPage extends StatelessWidget {
                             ),
                             child: IconButton(
                               icon: Icon(Icons.arrow_forward_ios),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => AboutFlowPage()),
+                                );
+                              },
                               color: Color(0xff212435),
                               iconSize: 10,
                             ),
