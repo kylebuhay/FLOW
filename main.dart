@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'SettingsPage.dart'; // Import your SettingsPage
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,6 @@ class HomeScreen extends StatelessWidget {
             label: 'Settings',
           ),
         ],
-
         backgroundColor: Color(0xff1e1e1e),
         currentIndex: 0,
         elevation: 8,
@@ -66,19 +66,26 @@ class HomeScreen extends StatelessWidget {
         unselectedFontSize: 11,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        onTap: (value) {},
+        onTap: (index) {
+          // Handle bottom navigation tap
+          if (index == 2) {
+            // Index 2 corresponds to the Settings icon
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsPage()),
+            );
+          }
+        },
       ),
       body: Stack(
         alignment: Alignment.topLeft,
         children: [
-          ///***If you have exported images you must have to copy those images in assets/images directory.
           Image(
             image: const AssetImage("assets/resting_pana1.png"),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
           ),
-
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -150,25 +157,24 @@ class HomeScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Container(
-                        margin: const EdgeInsets.all(0),
-                        padding: const EdgeInsets.all(0),
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff272a2f),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: IconButton(
-                          icon: const Icon(Icons.add),
-                          onPressed: () {
-
-
-
-                          },
-                          color: const Color(0xffffffff),
-                          iconSize: 13,
-                        )),
+                      margin: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(0),
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff272a2f),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: () {
+                          // Handle add button press
+                        },
+                        color: const Color(0xffffffff),
+                        iconSize: 13,
+                      ),
+                    ),
                   ],
                 ),
               ),
