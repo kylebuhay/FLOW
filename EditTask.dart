@@ -1,5 +1,4 @@
-///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
-
+import 'package:flow/main.dart';
 import 'package:flutter/material.dart';
 
 class EditTask extends StatelessWidget {
@@ -24,7 +23,7 @@ class EditTask extends StatelessWidget {
           ],
 
         backgroundColor: Color(0xff1e1e1e),
-        currentIndex: 0,
+        currentIndex: 1,
         elevation: 8,
         iconSize: 21,
         selectedItemColor: Color(0xff47465d),
@@ -40,12 +39,11 @@ class EditTask extends StatelessWidget {
         children: [
           ///***If you have exported images you must have to copy those images in assets/images directory.
           Image(
-            image: AssetImage("assets/images/flow_resting-pana-1.png"),
+            image: AssetImage("assets/resting_pana1.png"),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
           ),
-
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -76,7 +74,12 @@ class EditTask extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
                           child: IconButton(
                             icon: Icon(Icons.arrow_back),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => HomeScreen()),
+                              );
+                            },
                             color: Color(0xff212435),
                             iconSize: 20,
                           ),
