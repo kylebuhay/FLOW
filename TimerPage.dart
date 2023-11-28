@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'SettingsPage.dart';
+import 'main.dart';
+import 'SetTimer.dart';
 
 class TimerPage extends StatelessWidget {
 
@@ -40,7 +43,6 @@ class TimerPage extends StatelessWidget {
             label: 'Settings',
           ),
         ],
-
         backgroundColor: Color(0xff1e1e1e),
         currentIndex: 0,
         elevation: 8,
@@ -51,7 +53,21 @@ class TimerPage extends StatelessWidget {
         unselectedFontSize: 11,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        onTap: (value) {},
+        onTap: (index) {
+          // Handle bottom navigation tap
+          if (index == 1) {
+            // Index 2 corresponds to the Settings icon
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          }else if(index == 2){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsPage()),
+            );
+          }
+        },
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -66,7 +82,12 @@ class TimerPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SetTimer()),
+                    );
+                  },
                   color: Color(0xffffffff),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -99,7 +120,7 @@ class TimerPage extends StatelessWidget {
                 children: [
                   ///***If you have exported images you must have to copy those images in assets/images directory.
                   Image(
-                    image: AssetImage("assets/images/clock.png"),
+                    image: AssetImage("assets/clock.png"),
                     height: 245,
                     width: MediaQuery.of(context).size.width * 0.8,
                     fit: BoxFit.contain,
