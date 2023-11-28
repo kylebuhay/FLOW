@@ -5,6 +5,8 @@
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class SettingsPage extends StatelessWidget {
         children: [
           ///***If you have exported images you must have to copy those images in assets/images directory.
           Image(
-            image: AssetImage("assets/images/flow_thoughts-pana-1.png"),
+            image: AssetImage("assets/flow_thoughts-pana-1.png"),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
@@ -128,26 +130,17 @@ class SettingsPage extends StatelessWidget {
                               size: 20,
                             ),
                           ),
-                          Text(
-                            "About Flow",
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 10,
-                              color: Color(0xff000000),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(0),
-                            padding: EdgeInsets.all(0),
-                            width: 134,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Color(0x00000000),
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.zero,
+                          Expanded(
+                            child: Text(
+                              "About Flow",
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FontStyle.normal,
+                                fontSize: 10,
+                                color: Color(0xff000000),
+                              ),
                             ),
                           ),
                           Container(
@@ -227,26 +220,17 @@ class SettingsPage extends StatelessWidget {
                             size: 20,
                           ),
                         ),
-                        Text(
-                          "Detect Shake",
-                          textAlign: TextAlign.start,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 10,
-                            color: Color(0xff000000),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(0),
-                          padding: EdgeInsets.all(0),
-                          width: 124,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: Color(0x00000000),
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.zero,
+                        Expanded(
+                          child: Text(
+                            "Detect Shake",
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 10,
+                              color: Color(0xff000000),
+                            ),
                           ),
                         ),
                         Container(
@@ -313,15 +297,17 @@ class SettingsPage extends StatelessWidget {
                               color: Color(0xff000000),
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.all(0),
-                            padding: EdgeInsets.all(0),
-                            width: 68,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Color(0x00000000),
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.zero,
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.all(0),
+                              padding: EdgeInsets.all(0),
+                              width: 68,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Color(0x00000000),
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.zero,
+                              ),
                             ),
                           ),
                           Container(
@@ -378,26 +364,17 @@ class SettingsPage extends StatelessWidget {
                               size: 20,
                             ),
                           ),
-                          Text(
-                            "Allow App Notifications",
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 10,
-                              color: Color(0xff000000),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(0),
-                            padding: EdgeInsets.all(0),
-                            width: 76,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Color(0x00000000),
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.zero,
+                          Expanded(
+                            child: Text(
+                              "Allow App Notifications",
+                              textAlign: TextAlign.start,
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FontStyle.normal,
+                                fontSize: 10,
+                                color: Color(0xff000000),
+                              ),
                             ),
                           ),
                           Container(
