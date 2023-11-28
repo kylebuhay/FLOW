@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'SettingsPage.dart'; // Import your SettingsPage
+import 'TimerPage.dart';
+import 'AddTask.dart';
+import 'EditTask.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,7 +61,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
         backgroundColor: Color(0xff1e1e1e),
-        currentIndex: 0,
+        currentIndex: 1,
         elevation: 8,
         iconSize: 21,
         selectedItemColor: Color(0xff47465d),
@@ -73,6 +77,11 @@ class HomeScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SettingsPage()),
+            );
+          }else if(index == 0){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TimerPage()),
             );
           }
         },
@@ -169,7 +178,39 @@ class HomeScreen extends StatelessWidget {
                       child: IconButton(
                         icon: const Icon(Icons.add),
                         onPressed: () {
-                          // Handle add button press
+                          Alert(
+                            context: context,
+                            // type: AlertType.warning,
+                            title: "Modify Task",
+                            buttons: [
+                              DialogButton(
+                                child: Text(
+                                  "Add",
+                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => AddTask()),
+                                  );
+                                },
+                                color: Color.fromRGBO(51, 149, 26, 1.0),
+                              ),
+                              DialogButton(
+                                child: Text(
+                                  "Edit",
+                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => EditTask()),
+                                  );
+                                },
+                                color: Color.fromRGBO(149, 26, 26, 1.0),
+                              )
+                            ],
+                          ).show();
                         },
                         color: const Color(0xffffffff),
                         iconSize: 13,
