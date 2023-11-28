@@ -188,7 +188,7 @@ class AboutFlowPage extends StatelessWidget {
                 child: Text(
                   "Back to Settings",
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                     fontStyle: FontStyle.normal,
                   ),
