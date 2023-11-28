@@ -1,11 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'TimerPage.dart';
 
 class SetTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       backgroundColor: Color(0xffffffff),
       appBar: AppBar(
         elevation: 0,
@@ -102,11 +104,42 @@ class SetTimer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 23),
+                      Expanded(
+                        child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 23),
+                          child: Text(
+                            "Hours",
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 13,
+                              color: Color(0xff000000),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(15, 0, 42, 0),
+                          child: Text(
+                            "Minutes",
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 13,
+                              color: Color(0xff000000),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
                         child: Text(
-                          "Hours",
+                          "Seconds",
                           textAlign: TextAlign.start,
                           overflow: TextOverflow.clip,
                           style: TextStyle(
@@ -115,31 +148,6 @@ class SetTimer extends StatelessWidget {
                             fontSize: 13,
                             color: Color(0xff000000),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15, 0, 42, 0),
-                        child: Text(
-                          "Minutes",
-                          textAlign: TextAlign.start,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 13,
-                            color: Color(0xff000000),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "Seconds",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 13,
-                          color: Color(0xff000000),
                         ),
                       ),
                     ],
@@ -319,7 +327,12 @@ class SetTimer extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => TimerPage()),
+                          );
+                        },
                         color: Color(0xff141e26),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -339,19 +352,29 @@ class SetTimer extends StatelessWidget {
                         height: 40,
                         minWidth: 90,
                       ),
-                      Container(
-                        margin: EdgeInsets.all(0),
-                        padding: EdgeInsets.all(0),
-                        width: 70,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: Color(0x00000000),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.zero,
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.all(0),
+                          padding: EdgeInsets.all(0),
+                          width: 70,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Color(0x00000000),
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.zero,
+                          ),
                         ),
                       ),
                       MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+
+                          // Create Timer Object and pass on time
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => TimerPage()),
+                          );
+                        },
                         color: Color(0xff141e26),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -360,7 +383,7 @@ class SetTimer extends StatelessWidget {
                         ),
                         padding: EdgeInsets.all(16),
                         child: Text(
-                          "Button",
+                          "Start",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
