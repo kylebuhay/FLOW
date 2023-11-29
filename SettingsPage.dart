@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'TimerPage.dart';
+import 'AboutFlowPage.dart'; // Import your SettingsPage
 import 'main.dart';
-import 'AboutFlowPage.dart';
+import 'TimerPage.dart';
 
 class SettingsPage extends StatelessWidget {
+  
+  
   const SettingsPage({super.key});
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,10 +171,8 @@ class SettingsPage extends StatelessWidget {
                               icon: Icon(Icons.arrow_forward_ios),
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => AboutFlowPage()),
-                                );
-                              },
+                                    context, MaterialPageRoute(builder: (context) => AboutFlowPage()));
+                                },
                               color: Color(0xff212435),
                               iconSize: 10,
                             ),
