@@ -5,6 +5,7 @@ import 'TimerPage.dart';
 
 import 'package:shake/shake.dart';
 
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
