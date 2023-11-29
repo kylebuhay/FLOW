@@ -1,0 +1,299 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'SettingsPage.dart';
+import 'main.dart';
+import 'SetTimer.dart';
+import 'package:custom_timer/custom_timer.dart';
+import 'forTimer.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+class TimerPage extends StatefulWidget {
+  @override
+  State<TimerPage> createState() => TimerPageState();
+}
+
+class TimerPageState extends State<TimerPage>
+    with SingleTickerProviderStateMixin {
+  TextEditingController _minuteController = TextEditingController();
+
+  int hour = 0;
+  int minute = 0;
+  int second = 10;
+  int timerValue = 0;
+  SetTimer newSetTimer = SetTimer();
+
+// timer create
+  late CustomTimerController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = CustomTimerController(
+        vsync: this,
+        begin: Duration(hours: hour, minutes: minute, seconds: second),
+        end: Duration(seconds: 0),
+        initialState: CustomTimerState.reset,
+        interval: CustomTimerInterval.milliseconds);
+
+    void dispose() {
+      _controller.dispose();
+      super.dispose();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Color(0xffffffff),
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: false,
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0x003a57e8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
+        ),
+        title: Text(
+          "Your Timer",
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
+            fontSize: 25,
+            color: Color(0xff000000),
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.access_alarm),
+            label: 'Timer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.document_scanner),
+            label: 'To-Do List',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+        backgroundColor: Color(0xff1e1e1e),
+        currentIndex: 0,
+        elevation: 8,
+        iconSize: 21,
+        selectedItemColor: Color(0xff47465d),
+        unselectedItemColor: Color(0xff9e9e9e),
+        selectedFontSize: 11,
+        unselectedFontSize: 11,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        onTap: (index) {
+          // Handle bottom navigation tap
+          if (index == 1) {
+            // Index 2 corresponds to the Settings icon
+            dispose();
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          } else if (index == 2) {
+            dispose();
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsPage()),
+            );
+          }
+        },
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 50, 0, 35),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                MaterialButton(
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => SetTimer()),
+                    // );
+                    Alert(
+                        context: context,
+                        title: "Set Timer",
+                        content: Column(
+                          children: <Widget>[
+                            const TextField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.hourglass_full),
+                                labelText: 'Hour',
+                              ),
+                            ),
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              controller: _minuteController,
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.hourglass_top),
+                                labelText: 'Minute',
+                              ),
+                            ),
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.hourglass_bottom),
+                                labelText: 'Second',
+                              ),
+                            ),
+                          ],
+                        ),
+                        buttons: [
+                          DialogButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(
+                              "Start",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          )
+                        ]).show();
+                  },
+                  color: Color(0xffffffff),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    side: BorderSide(color: Color(0xff000000), width: 2.5),
+                  ),
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    "Set Timer",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      fontStyle: FontStyle.normal,
+                    ),
+                  ),
+                  textColor: Color(0xff000000),
+                  height: 40,
+                  minWidth: 140,
+                ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  ///***If you have exported images you must have to copy those images in assets/images directory.
+                  Image(
+                    image: AssetImage("assets/clock.png"),
+                    height: 245,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    fit: BoxFit.contain,
+                  ),
+
+                  //Place Timer
+                  CustomTimer(
+                      controller: _controller,
+                      builder: (state, time) {
+                        // Build the widget you want!🎉
+                        return Text(
+                            "${time.hours}:${time.minutes}:${time.seconds}",
+                            style: const TextStyle(
+                                fontSize: 40.0, fontWeight: FontWeight.w500));
+                      })
+                ],
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Color(0x00000000),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(80.0),
+                    border: Border.all(color: Color(0xff000000), width: 3),
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.play_arrow),
+                    onPressed: () {
+                      //start timer
+                      setState(() {
+                        minute = int.parse(_minuteController.text);
+                        print(minute);
+
+                        _controller.begin = (Duration(minutes: minute));
+
+                        // _controller.start();
+                      });
+                    },
+                    color: Color(0xff212435),
+                    iconSize: 24,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  width: 70,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: Color(0x1fffffff),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Color(0x00ffffff),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(80.0),
+                    border: Border.all(color: Color(0xff000000), width: 3),
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.circle),
+                    onPressed: () {
+                      // stop timer
+                      _controller.pause();
+                    },
+                    color: Color(0xff212435),
+                    iconSize: 24,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
