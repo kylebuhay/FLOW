@@ -1,21 +1,42 @@
 import 'package:flutter/material.dart';
-import 'AboutFlowPage.dart'; // Import your SettingsPage
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shake/shake.dart';
+import 'package:flutter_dnd/flutter_dnd.dart';
+
+import 'AboutFlowPage.dart';
 import 'main.dart';
 import 'TimerPage.dart';
 
-import 'package:shake/shake.dart';
+int ctr = 0;
 
 class SettingsPage extends StatefulWidget {
-    const SettingsPage({super.key});
+  const SettingsPage({Key? key}) : super(key: key);
 
-    @override
-    State<SettingsPage> createState() => _SettingsPageState();
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
     bool shakeIsSwitched = false;
+    late ShakeDetector shakeDetector;
+
     bool blockNotisIsSwitched = false;
     bool appNotisIsSwitched = false;
+
+    @override
+    void initState() {
+        super.initState();
+        // Initialize the shake detector
+        shakeDetector = ShakeDetector.waitForStart(
+            onPhoneShake: () {},
+        );
+    }
+
+    @override
+    void dispose() {
+        shakeDetector?.stopListening();
+        super.dispose();
+    }
 
     @override
     Widget build(BuildContext context) {
@@ -259,10 +280,35 @@ class _SettingsPageState extends State<SettingsPage> {
                                                     ),
                                                 ),
                                                 Switch(
-                                                    value: blockNotisIsSwitched,
+                                                    value: shakeIsSwitched,
                                                     onChanged: (value) {
                                                         setState(() {
-                                                            blockNotisIsSwitched = value;
+                                                            shakeIsSwitched = value;
+                                                            if (shakeIsSwitched == true) {
+                                                                shakeDetector.startListening();
+                                                                print("SHAKE IS ON!");
+                                                                shakeDetector = ShakeDetector.waitForStart(
+                                                                    onPhoneShake: () {
+                                                                        print("SHAKE SHAKE SHAKE SENORA $ctr");
+                                                                        ctr++;
+                                                                        Alert(
+                                                                            context: context,
+                                                                            // type: AlertType.warning,
+                                                                            title: "Detected a shake!",
+                                                                            desc: "Focus on your work.",
+                                                                            buttons: [],
+                                                                        ).show();
+                                                                    },
+                                                                    minimumShakeCount: 1,
+                                                                    shakeSlopTimeMS: 3000, // detection interval per MS
+                                                                    shakeCountResetTime: 1,
+                                                                    shakeThresholdGravity: 2, // lakas ng shake
+                                                                );
+                                                            } else {
+                                                                shakeDetector.stopListening();
+                                                                print("SHAKE IS OFF!");
+                                                                ctr = 0;
+                                                            }
                                                         });
                                                     },
                                                     activeTrackColor: Color(0xff141e26),
@@ -331,10 +377,21 @@ class _SettingsPageState extends State<SettingsPage> {
                                                         ),
                                                     ),
                                                     Switch(
-                                                        value: appNotisIsSwitched,
+                                                        value: blockNotisIsSwitched,
                                                         onChanged: (value) {
-                                                            setState(() {
-                                                                appNotisIsSwitched = value;
+                                                            setState(() async {
+                                                                blockNotisIsSwitched = value;
+                                                                if (blockNotisIsSwitched == true) {
+                                                                  final isNotificationPolicyAccessGranted = await FlutterDnd.isNotificationPolicyAccessGranted;
+                                                                  if (isNotificationPolicyAccessGranted != null && isNotificationPolicyAccessGranted) {
+                                                                    await FlutterDnd.setInterruptionFilter(FlutterDnd.INTERRUPTION_FILTER_NONE);
+                                                                  } else {
+                                                                    FlutterDnd.gotoPolicySettings();
+                                                                  }
+                                                                  print("BLOCK NOTIFS. IS ON!");
+                                                                } else {
+                                                                  print("BLOCK NOTIFS. IS OFF!");
+                                                                }
                                                             });
                                                         },
                                                         activeTrackColor: Color(0xff141e26),
@@ -404,10 +461,15 @@ class _SettingsPageState extends State<SettingsPage> {
                                                         ),
                                                     ),
                                                     Switch(
-                                                        value: shakeIsSwitched,
+                                                        value: appNotisIsSwitched,
                                                         onChanged: (value) {
                                                             setState(() {
-                                                                shakeIsSwitched = value;
+                                                                appNotisIsSwitched = value;
+                                                                if (appNotisIsSwitched == true) {
+                                                                    print("FLOW NOTIFS. IS ON!");
+                                                                } else {
+                                                                    print("FLOW NOTIFS. IS OFF!");
+                                                                }
                                                             });
                                                         },
                                                         activeTrackColor: Color(0xff141e26),
