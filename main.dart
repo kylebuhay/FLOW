@@ -1,9 +1,11 @@
+import 'package:flow/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'SettingsPage.dart'; // Import your SettingsPage
 import 'TimerPage.dart';
 import 'AddTask.dart';
 import 'EditTask.dart';
+import 'SplashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
