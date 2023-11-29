@@ -3,11 +3,20 @@ import 'AboutFlowPage.dart'; // Import your SettingsPage
 import 'main.dart';
 import 'TimerPage.dart';
 
-class SettingsPage extends StatelessWidget {
-  
-  
+import 'package:shake/shake.dart';
+
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
-  
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  bool shakeIsSwitched = false;
+  bool blockNotisIsSwitched = false;
+  bool appNotisIsSwitched = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,7 +217,7 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -249,22 +258,17 @@ class SettingsPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.all(0),
-                          padding: EdgeInsets.all(0),
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Color(0x00000000),
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.zero,
-                          ),
-                          child: IconButton(
-                            icon: Icon(Icons.arrow_forward_ios),
-                            onPressed: () {},
-                            color: Color(0xff212435),
-                            iconSize: 10,
-                          ),
+                        Switch(
+                          value: blockNotisIsSwitched,
+                          onChanged: (value) {
+                            setState(() {
+                              blockNotisIsSwitched = value;
+                            });
+                          },
+                          activeTrackColor: Color(0xff141e26),
+                          activeColor: Color(0xff47465d),
+                          inactiveTrackColor: Color(0xff4d9e9e9e),
+                          inactiveThumbColor: Color(0xff9e9e9e),
                         ),
                       ],
                     ),
@@ -290,7 +294,7 @@ class SettingsPage extends StatelessWidget {
                         border: Border.all(color: Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -326,21 +330,27 @@ class SettingsPage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          Switch(
+                            value: appNotisIsSwitched,
+                            onChanged: (value) {
+                              setState(() {
+                                appNotisIsSwitched = value;
+                              });
+                            },
+                            activeTrackColor: Color(0xff141e26),
+                            activeColor: Color(0xff47465d),
+                            inactiveTrackColor: Color(0xff4d9e9e9e),
+                            inactiveThumbColor: Color(0xff9e9e9e),
+                          ),
                           Container(
                             margin: EdgeInsets.all(0),
                             padding: EdgeInsets.all(0),
-                            width: 30,
+                            width: 0,
                             height: 30,
                             decoration: BoxDecoration(
                               color: Color(0x00000000),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.zero,
-                            ),
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_forward_ios),
-                              onPressed: () {},
-                              color: Color(0xff212435),
-                              iconSize: 10,
                             ),
                           ),
                         ],
@@ -393,21 +403,27 @@ class SettingsPage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          Switch(
+                            value: shakeIsSwitched,
+                            onChanged: (value) {
+                              setState(() {
+                                shakeIsSwitched = value;
+                              });
+                            },
+                            activeTrackColor: Color(0xff141e26),
+                            activeColor: Color(0xff47465d),
+                            inactiveTrackColor: Color(0xff4d9e9e9e),
+                            inactiveThumbColor: Color(0xff9e9e9e),
+                          ),
                           Container(
                             margin: EdgeInsets.all(0),
                             padding: EdgeInsets.all(0),
-                            width: 30,
+                            width: 0,
                             height: 30,
                             decoration: BoxDecoration(
                               color: Color(0x00000000),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.zero,
-                            ),
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_forward_ios),
-                              onPressed: () {},
-                              color: Color(0xff212435),
-                              iconSize: 10,
                             ),
                           ),
                         ],
