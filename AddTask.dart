@@ -1,6 +1,5 @@
-///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
-
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class AddTask extends StatelessWidget {
   @override
@@ -24,7 +23,7 @@ class AddTask extends StatelessWidget {
           ],
 
         backgroundColor: Color(0xff1e1e1e),
-        currentIndex: 0,
+        currentIndex: 1,
         elevation: 8,
         iconSize: 21,
         selectedItemColor: Color(0xff47465d),
@@ -40,7 +39,7 @@ class AddTask extends StatelessWidget {
         children: [
           ///***If you have exported images you must have to copy those images in assets/images directory.
           Image(
-            image: AssetImage("assets/resting-pana1.png"),
+            image: AssetImage("assets/resting_pana1.png"),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
@@ -255,7 +254,11 @@ class AddTask extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           MaterialButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => HomeScreen()),
+                              );
+                            },
                             color: Color(0xff141e26),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
