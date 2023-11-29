@@ -1,19 +1,17 @@
-///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
-
 import 'package:flutter/material.dart';
-
+import 'main.dart';
 
 class WelcomePage extends StatelessWidget {
 
 @override
-Widget build(BuildContext context) {
-return Scaffold(
-backgroundColor: Color(0xffffffff),
-body:Row(
-mainAxisAlignment:MainAxisAlignment.center,
-crossAxisAlignment:CrossAxisAlignment.center,
-mainAxisSize:MainAxisSize.max,
-children:[
+  Widget build(BuildContext context) {
+  return Scaffold(
+  backgroundColor: Color(0xffffffff),
+  body:Row(
+  mainAxisAlignment:MainAxisAlignment.center,
+  crossAxisAlignment:CrossAxisAlignment.center,
+  mainAxisSize:MainAxisSize.max,
+  children:[
 
 
 Column(
@@ -23,7 +21,7 @@ mainAxisSize:MainAxisSize.max,
 children: [
 ///***If you have exported images you must have to copy those images in assets/images directory.
 Image(
-image:AssetImage("assets/images/Studying-pana-1.png"),
+image:AssetImage("assets/Studying-pana 1.png"),
 height:MediaQuery.of(context).size.height * 0.4,
 width:MediaQuery.of(context).size.width,
 fit:BoxFit.cover,
@@ -55,7 +53,7 @@ overflow:TextOverflow.clip,
 style:TextStyle(
 fontWeight:FontWeight.w400,
 fontStyle:FontStyle.normal,
-fontSize:14,
+fontSize:20,
 color:Color(0xff000000),
 ),
 ),
@@ -69,13 +67,16 @@ overflow:TextOverflow.clip,
 style:TextStyle(
 fontWeight:FontWeight.w400,
 fontStyle:FontStyle.normal,
-fontSize:14,
+fontSize:20,
 color:Color(0xff000000),
 ),
 ),
 ),
 MaterialButton(
-onPressed:(){},
+onPressed:(){
+  Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => HomeScreen()));
+},
 color:Color(0xff2f506a),
 elevation:0,
 shape:RoundedRectangleBorder(
@@ -83,7 +84,7 @@ borderRadius:BorderRadius.circular(10.0),
 side:BorderSide(color:Color(0xff808080),width:1),
 ),
 padding:EdgeInsets.all(16),
-child:Text("Get Started", style: TextStyle( fontSize:10,
+child:Text("Get Started", style: TextStyle( fontSize:15,
 fontWeight:FontWeight.w500,
 fontStyle:FontStyle.normal,
 ),),
