@@ -1,14 +1,109 @@
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'SettingsPage.dart';
 import 'main.dart';
-import 'SetTimer.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
-class TimerPage extends StatelessWidget {
+class TimerPage extends StatefulWidget {
+  @override
+  State<TimerPage> createState() => TimerPageState();
+}
+
+class TimerPageState extends State<TimerPage>
+    with SingleTickerProviderStateMixin {
+  late TextEditingController hourController = TextEditingController();
+  late TextEditingController minuteController = TextEditingController();
+  late TextEditingController secondController = TextEditingController();
+
+  late Duration countdownDuration = Duration(seconds: 0);
+
+  Duration duration = Duration();
+  Timer? timer;
+
+  bool isCountdown = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // startTimer();
+    reset();
+  }
+
+  @override
+  void dispose() {
+    minuteController.dispose();
+
+    super.dispose();
+  }
+
+  void reset() {
+    if (isCountdown) {
+      setState(() => duration = countdownDuration);
+    } else {
+      setState(() => duration = Duration());
+    }
+  }
+
+  void addTime() {
+    final addSeconds = isCountdown ? -1 : 1;
+
+    setState(() {
+      final seconds = duration.inSeconds + addSeconds;
+
+      if (seconds < 0) {
+        timer?.cancel();
+      } else {
+        duration = Duration(seconds: seconds);
+      }
+    });
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+  }
+
+  void stopTimer({bool resets = true}) {
+    if (resets) {
+      reset();
+    }
+    setState(() => timer?.cancel());
+  }
+
+  void setTimer() {
+    // Parse values from controllers
+    int hours = int.tryParse(hourController.text) ?? 0;
+    int minutes = int.tryParse(minuteController.text) ?? 0;
+    int seconds = int.tryParse(secondController.text) ?? 0;
+
+    // Update the countdownDuration with parsed values
+    countdownDuration =
+        Duration(hours: hours, minutes: minutes, seconds: seconds);
+
+    // Update the displayed time
+    setState(() => duration = countdownDuration);
+
+    // Optionally, you can print the new countdownDuration
+    print('New Countdown Duration: $countdownDuration');
+  }
+
+  Widget buildTime() {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours.remainder(60));
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+
+    return Text(
+      '$hours:$minutes:$seconds',
+      style: TextStyle(fontSize: 45),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xffffffff),
       appBar: AppBar(
         elevation: 0,
@@ -57,11 +152,15 @@ class TimerPage extends StatelessWidget {
           // Handle bottom navigation tap
           if (index == 1) {
             // Index 2 corresponds to the Settings icon
+            minuteController.dispose();
+
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
             );
-          }else if(index == 2){
+          } else if (index == 2) {
+            minuteController.dispose();
+
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SettingsPage()),
@@ -83,10 +182,52 @@ class TimerPage extends StatelessWidget {
               children: [
                 MaterialButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SetTimer()),
-                    );
+                    Alert(
+                        context: context,
+                        title: "Set Timer",
+                        content: Column(
+                          children: <Widget>[
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              controller: hourController,
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.hourglass_full),
+                                labelText: 'Hour',
+                              ),
+                            ),
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              controller: minuteController,
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.hourglass_top),
+                                labelText: 'Minute',
+                              ),
+                            ),
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              controller: secondController,
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.hourglass_bottom),
+                                labelText: 'Second',
+                              ),
+                            ),
+                          ],
+                        ),
+                        buttons: [
+                          DialogButton(
+                            // onPressed: () => Navigator.pop(context),
+                            onPressed: () {
+                              setTimer(); // Call setTimer when the user presses "Start"
+
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              "Start",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          )
+                        ]).show();
                   },
                   color: Color(0xffffffff),
                   elevation: 0,
@@ -118,24 +259,13 @@ class TimerPage extends StatelessWidget {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  ///***If you have exported images you must have to copy those images in assets/images directory.
                   Image(
                     image: AssetImage("assets/clock.png"),
                     height: 245,
                     width: MediaQuery.of(context).size.width * 0.8,
                     fit: BoxFit.contain,
                   ),
-                  Text(
-                    "00:00:00",
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.clip,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 35,
-                      color: Color(0xff000000),
-                    ),
-                  ),
+                  buildTime(),
                 ],
               ),
             ],
@@ -161,7 +291,10 @@ class TimerPage extends StatelessWidget {
                   ),
                   child: IconButton(
                     icon: Icon(Icons.play_arrow),
-                    onPressed: () {},
+                    onPressed: () {
+
+                      startTimer();
+                    },
                     color: Color(0xff212435),
                     iconSize: 24,
                   ),
@@ -191,7 +324,10 @@ class TimerPage extends StatelessWidget {
                   ),
                   child: IconButton(
                     icon: Icon(Icons.circle),
-                    onPressed: () {},
+                    onPressed: () {
+                      // stop timer
+                      stopTimer(resets: false);
+                    },
                     color: Color(0xff212435),
                     iconSize: 24,
                   ),
